@@ -6,7 +6,7 @@ Simulação de transferência via pix entre contas bancárias.
 * Cadastro
 * Home
 * Perfil
-* Fazer transferência
+* Fazer pix
 * Extrato
 
 ## Tecnologias usuadas
