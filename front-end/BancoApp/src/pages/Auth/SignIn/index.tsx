@@ -92,7 +92,7 @@ const SignIn: React.FC = () => {
                                 placeholder="CPF"
                                 autoCorrect={false}
                                 autoCapitalize="none"
-                                keyboardType="numbers-and-punctuation"
+                                keyboardType="numeric"
                                 returnKeyType="next"
                                 onSubmitEditing={() => {
                                     passwordInputRef.current?.focus()

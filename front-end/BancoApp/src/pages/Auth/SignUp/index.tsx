@@ -62,13 +62,14 @@ const SignUp: React.FC = () => {
 
                 navigation.navigate('SignIn');
 
-            } catch (err) {
+            } catch (err: any) {
                 if (err instanceof Yup.ValidationError) {
                     const errors = getValidationErrors(err);
                     formRef.current?.setErrors(errors);
                     return;
                 }
-                Alert.alert('Erro na autenticação', 'Ocorreu um erro ao fazer login, cheque as credenciais.')
+
+                Alert.alert('Erro na autenticação', 'Ocorreu um erro ao fazer o cadastro.')
             }
         },
         [],
@@ -133,6 +134,7 @@ const SignUp: React.FC = () => {
                                 ref={valueInputRef}
                                 name="value"
                                 icon="dollar-sign"
+                                keyboardType="numeric"
                                 placeholder="Valor"
                                 returnKeyType="send"
                                 onSubmitEditing={() => formRef.current?.submitForm()}

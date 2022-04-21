@@ -3,10 +3,11 @@ import React, { createContext, useCallback, useContext, useState, useEffect } fr
 import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
 import axios from 'axios';
+import { User } from '../interfaces/user';
 
 interface AuthState {
     token: string;
-    user: object;
+    user: User;
 }
 
 interface SignInCredentials {
@@ -15,7 +16,7 @@ interface SignInCredentials {
 }
 
 interface AuthContextData {
-    user: object;
+    user: User;
     signIn(credentials: SignInCredentials): Promise<void>;
     signOut(): void;
     loading: boolean;

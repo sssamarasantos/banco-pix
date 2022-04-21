@@ -3,10 +3,10 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
     flex: 1;
-    /* align-items: center;
-    justify-content: center; */
-    margin-left: 40px;
-    /* padding: 0 30px ${Platform.OS === 'android' ? 150 : 40}px; */
+    /* align-items: center; */
+    margin: 0 30px;
+    justify-content: center;
+    padding: 0 30px ${Platform.OS === 'android' ? 100 : 40}px;
 `;
 
 export const Title = styled.Text`
@@ -17,26 +17,7 @@ export const Title = styled.Text`
     font-weight: 800;
 `;
 
-export const Box = styled.View`
-    /* margin-top: 20px; */
-`;
-
-export const Label = styled.Text`
-    font-size: 18px;
-
-    color: #fff;
-    font-weight: 700;
-`;
-
-export const Data = styled.Text`
-    color: #fff;
-    font-size: 18px;
-
-    margin-left: 20px;
-    margin-bottom: 20px;
-`;
-
-export const Back = styled.TouchableOpacity`
+export const SignOut = styled.TouchableOpacity`
     position: absolute;
     left: 0;
     right: 0;
@@ -51,7 +32,7 @@ export const Back = styled.TouchableOpacity`
     flex-direction: row;
 `;
 
-export const BackText = styled.Text`
+export const SignOutText = styled.Text`
     color: #fff;
     font-size: 18px;
     font-family: 'RobotoSlab-Regular';
