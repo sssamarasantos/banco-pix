@@ -2,7 +2,6 @@
 using System;
 using TesteBanco.API.Business.IRepositories;
 using TesteBanco.API.Domain.DTOs;
-using TesteBanco.API.Domain.Models;
 
 namespace TesteBanco.API.Controllers
 {
@@ -21,6 +20,13 @@ namespace TesteBanco.API.Controllers
         public IActionResult List()
         {
             var listClients = _clienteRepository.List();
+            return Ok(listClients);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var listClients = _clienteRepository.Get(id);
             return Ok(listClients);
         }
 

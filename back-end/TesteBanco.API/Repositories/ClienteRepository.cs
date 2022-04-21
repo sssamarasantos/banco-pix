@@ -15,8 +15,16 @@ namespace TesteBanco.API.Repositories
 
         public ClienteRepository()
         {
+            clients = null;
+
             if (clients is null)
                 clients = GenerateClients();
+        }
+
+        public Cliente Get(int id)
+        {
+            var client = clients.FirstOrDefault(x => x.Id == id);
+            return client;
         }
 
         public Cliente Create(ClienteDTO clientDTO)
@@ -30,9 +38,9 @@ namespace TesteBanco.API.Repositories
                 Value = clientDTO.Value
             };
 
-            ValidateCliente(client.Cpf);
+            ValidateCliente(client);
 
-            client.Id = GenerateId();
+            client.Id = GenerateClienteId();
 
             clients.Add(client);
 
@@ -52,16 +60,16 @@ namespace TesteBanco.API.Repositories
             File.WriteAllText("cliente.json", jsonString);
         }
 
-        private int GenerateId()
+        private void ValidateCliente(Cliente client)
         {
-            return clients.Count + 1;
-        }
-
-        private void ValidateCliente(string cpf)
-        {
-            var existClient = clients.FirstOrDefault(x => x.Cpf == cpf);
+            var existClient = clients.FirstOrDefault(x => x.Cpf == client.Cpf || x.PixKey == client.PixKey);
             if (existClient != null)
                 throw new Exception("Cliente já cadastrado");
+        }
+
+        private int GenerateClienteId()
+        {
+            return clients.Count + 1;
         }
     }
 }

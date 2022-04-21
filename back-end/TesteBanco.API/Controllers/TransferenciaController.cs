@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TesteBanco.API.Business.IRepositories;
+using TesteBanco.API.Domain.DTOs;
 using TesteBanco.API.Domain.Models;
 
 namespace TesteBanco.API.Controllers
@@ -16,7 +17,7 @@ namespace TesteBanco.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(DadosTransferencia dadosTransferencia)
+        public IActionResult Post(DadosTransferenciaDTO dadosTransferencia)
         {
             _transferenciaRepository.TransactionPix(dadosTransferencia);
 

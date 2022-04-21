@@ -8,6 +8,7 @@ namespace TesteBanco.API.Business.IRepositories
     {
         Cliente Create(ClienteDTO cliente);
         IList<Cliente> List();
+        Cliente Get(int id);
         void Save();
     }
 }

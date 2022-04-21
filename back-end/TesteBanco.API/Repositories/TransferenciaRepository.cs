@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Json;
 using TesteBanco.API.Business.IRepositories;
+using TesteBanco.API.Domain.DTOs;
 using TesteBanco.API.Domain.Models;
 
 namespace TesteBanco.API.Repositories
@@ -15,28 +16,42 @@ namespace TesteBanco.API.Repositories
 
         public TransferenciaRepository()
         {
+            clients = null;
+            transactionDatas = null;
+
             if (clients is null)
                 clients = GenerateClients();
             if (transactionDatas is null)
                 transactionDatas = GenerateDataTransfer();
         }
 
-        public void TransactionPix(DadosTransferencia transactionData)
+        public void TransactionPix(DadosTransferenciaDTO transactionData)
         {
-            ValidatePixKey(transactionData.IdClientOrigin, transactionData.PixKeyOrigin);
-            ValidatePixKey(transactionData.IdClientDestiny, transactionData.PixKeyDestiny);
+            var newTransactionData = new DadosTransferencia
+            {
+                IdClientDestiny = transactionData.IdClientDestiny,
+                PixKeyDestiny = transactionData.PixKeyDestiny,
+                IdClientOrigin = transactionData.IdClientOrigin,
+                Value = transactionData.Value,
+                Date = DateTime.Now
+            };
 
-            var clientOrigin = SearchCustomerByPixKey(transactionData.PixKeyOrigin);
             var clientDestiny = SearchCustomerByPixKey(transactionData.PixKeyDestiny);
 
-            ValidateHasValue(clientOrigin.Value, transactionData.Value);
+            newTransactionData.IdClientDestiny = clientDestiny.Id;
 
-            Discount(clientOrigin, transactionData.Value);
-            Add(clientDestiny, transactionData.Value);
+            ValidatePixKey(newTransactionData.IdClientDestiny, newTransactionData.PixKeyDestiny);
 
-            SaveClient();
-            TransactionCreate(transactionData);
+            var clientOrigin = SearchCustomerById(newTransactionData.IdClientOrigin);
+
+            ValidateHasValue(clientOrigin.Value, newTransactionData.Value);
+
+            Discount(clientOrigin, newTransactionData.Value);
+            Add(clientDestiny, newTransactionData.Value);
+
+            TransactionCreate(newTransactionData);
             TransactionSave();
+            SaveClient();
         }
 
         private Cliente Add(Cliente client, double value)
@@ -55,6 +70,7 @@ namespace TesteBanco.API.Repositories
 
         private DadosTransferencia TransactionCreate(DadosTransferencia transactionData)
         {
+            transactionData.Id = GenerateTransactionId();
             transactionDatas.Add(transactionData);
 
             return transactionData;
@@ -82,6 +98,12 @@ namespace TesteBanco.API.Repositories
             return client;
         }
 
+        private Cliente SearchCustomerById(int id)
+        {
+            var client = clients.Find(x => x.Id == id);
+            return client;
+        }
+
         private void ValidatePixKey(int idClient, string pixKey)
         {
             var existPixKey = clients.Where(x => x.Id == idClient && x.PixKey == pixKey).ToList();
@@ -97,6 +119,11 @@ namespace TesteBanco.API.Repositories
 
             if (accountValue < value)
                 throw new Exception("Não há saldo");
+        }
+
+        private int GenerateTransactionId()
+        {
+            return transactionDatas.Count + 1;
         }
     }
 }

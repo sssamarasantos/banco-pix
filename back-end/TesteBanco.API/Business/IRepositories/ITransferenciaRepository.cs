@@ -1,9 +1,9 @@
-﻿using TesteBanco.API.Domain.Models;
+﻿using TesteBanco.API.Domain.DTOs;
 
 namespace TesteBanco.API.Business.IRepositories
 {
     public interface ITransferenciaRepository
     {
-        void TransactionPix(DadosTransferencia transactionData);
+        void TransactionPix(DadosTransferenciaDTO transactionData);
     }
 }

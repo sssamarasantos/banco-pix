@@ -14,6 +14,7 @@ namespace TesteBanco.API.Repositories
 
         public LoginRepository()
         {
+            clients = null;
             if (clients is null)
                 clients = GenerateClients();
         }

@@ -25,6 +25,7 @@ namespace TesteBanco.API
             services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<ITransferenciaRepository, TransferenciaRepository>();
+            services.AddScoped<IExtratoRepository, ExtratoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
